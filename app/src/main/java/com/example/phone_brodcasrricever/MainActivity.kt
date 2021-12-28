@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         levelbattery = findViewById(R.id.level_Battery)
 
 
+
         val intentFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
         registerReceiver(batteryBroadcastReceiver, intentFilter)
 
@@ -34,9 +35,13 @@ class MainActivity : AppCompatActivity() {
 
     private val batteryBroadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
 
+
         override fun onReceive(context: Context?, intent: Intent?) {
 
+            var text : TextView= findViewById(R.id.textView)
+            val level = intent?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
 
+            text.setText("Level is $level")
 
 //            if (intent?.action == "android.intent.action.BATTERY_CHANGED") {
 //                val level = intent.getBooleanExtra(BatteryManager.EXTRA_STATUS, false)
@@ -54,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
             val isCharging: Boolean = status == BatteryManager.BATTERY_STATUS_CHARGING
                     || status == BatteryManager.BATTERY_STATUS_FULL
-
 
             Toast.makeText(context, "$isCharging", Toast.LENGTH_SHORT).show()
         }
